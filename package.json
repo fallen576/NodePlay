@@ -1,0 +1,31 @@
+{
+  "name": "nodeplay",
+  "version": "1.0.0",
+  "description": "This is a login application built on Node.js",
+  "main": "\u001b[D\u001b[D\u001b[D\u001b[Dindex\u001b[2~.js)",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fallen576/NodePlay.git"
+  },
+  "keywords": [
+    "login",
+    "node",
+    "js",
+    "Node.js"
+  ],
+  "author": "Benjamin Gianni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fallen576/NodePlay/issues"
+  },
+  "homepage": "https://github.com/fallen576/NodePlay#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "q": "^1.5.1"
+  }
+}
