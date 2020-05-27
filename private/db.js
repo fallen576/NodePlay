@@ -15,35 +15,41 @@ let query = (username, callback) => {
         if (err) {
             logger('Error in query db.js ' + err);
             callback(-1);
+            return;
         }
-        
         callback(rs);   
     });
 };
 
-let insert = (username, password) => {
+let insert = (username, password, callback) => {
     var sql = "INSERT INTO users (username, password) VALUES ('" + username + "', '" + password + "')";
     pool.query(sql, (err, rs) => {
         if (err) {
             logger('Error in insert db.js ' + err);
-            return -1;
+            callback(-1);
+            return;
         }
-        else {
-            return rs; 
-        }
+        callback(rs);
     });
 };
 
-let updatePassword = (username, password) => {
-    var sql = "UPDATE users SET password='" + password + "' WHERE username='" + username + "')";
+let updatePassword = (username, password, callback) => {
+    var sql = "UPDATE users SET password='" + password + "' WHERE username='" + username + "'";
     pool.query(sql, (err, rs) => {
         if (err) {
-            logger('Error in update db.js');
-            return -1;
+            logger('Error in update db.js ' + err);
+            callback(-1);
+            return;
         }
-        else {
-            return rs;
+        if (rs.affectedRows === 0) {
+            logger(username + " does not exist in the database. Inserted instead of updated.");
+            this.insert(username, password, (cb) => {
+                if (cb == -1) {
+                    logger("Sorry, we attempted to insert the user but failed.");
+                }
+            });
         }
+        callback(rs);
     })
 }
 
