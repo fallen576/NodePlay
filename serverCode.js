@@ -9,7 +9,7 @@ var app = express();
 var router = express.Router();
 
 app.listen(3000, () => {
-    logger('listening at 3000');
+    logger.log('listening at 3000');
 });
 
 /*GET EJS WORKING */
@@ -40,16 +40,16 @@ app.post('/login', (req, res) => {
 
 var insert = (username, password) => {
     database.query(username, (data) => {
-        logger(data);
+        logger.log(data);
         if (data == -1) {
-            logger("unable to connect");
+            logger.log("unable to connect");
         } else if (data == "") {
-            logger("user inserted");
+            logger.log("user inserted");
             database.insert(username, password);
             return;
         }
         else {
-            logger('Found user in database. Username is ' + data[0].username);
+            logger.log('Found user in database. Username is ' + data[0].username);
         }
     });
 };
@@ -58,12 +58,12 @@ var update = (username, password) => {
 
     database.update(username, password, (data) => {
         if (data == -1) {
-            logger("unable to connect");
+            logger.log("unable to connect");
         } else if (data == "") {
-            logger("user inserted");
+            logger.log("user inserted");
             database.insert(username, password);
         } else {
-            logger("user has been updated.");
+            logger.log("user has been updated.");
         }
     });
 };

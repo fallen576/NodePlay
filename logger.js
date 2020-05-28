@@ -1,6 +1,9 @@
-var url = 'http://localhost:8315/logMessage';   
+var db = require('./private/db');
 
 var log = message => console.log(message);
+var insert = (caller_ip, endpoint, message) => {
+    db.insertLog(caller_ip, endpoint, message);
+};
 
-module.exports = log;
-//module.exports.endpoint = url;
+module.exports.log = log;
+module.exports.insert = insert;
