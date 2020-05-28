@@ -1,14 +1,17 @@
 <html>
     <title>Login</title>
         <body>
+            <%if (username != undefined) {%>
+            <h1>Hi <%= username%></h1>
+            <%}%>
             <form action="/login" method="POST">
                 <label for="fname">username:</label><br>
-                <input type="text" name="username" value="John"/><br>
+                <input type="text" name="username" value="<%= (username == undefined) ? John : username%>"/><br>
                 <label for="lname">Password:</label><br>
                 <input type="password" name="password" value="Doe"/><br><br>
                 <input type="submit" value="Insert">
                 <input type="hidden" name="method" value="insert">
                 <input type="button" value="Update">
-            </form>
+            </form>             
         </body>
 </html>
