@@ -5,7 +5,7 @@ let pool = mysql.createPool({
     host: 'localhost',
     port: '3306',
     user : "node_user",
-    password : "",/*DUMB SCHOOL PASSWORD GOES HERE*/
+    password : "SchoolPassword1!",/*DUMB SCHOOL PASSWORD GOES HERE*/
     database : 'node'
 });
 

@@ -1,9 +1,18 @@
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script>
+    const socket = io('http://localhost:3000');
+
+    socket.on('chat-message', data => {
+        console.log(data);
+    })
+
+    socket.on('message-logged', ans => {
+        console.log('okay ' + JSON.stringify(ans));
+        document.getElementById('log').innerText = JSON.stringify(ans);
+
+    })
+</script>
 <h1>we in dis</h1>
 <html>
-    <table>
-        <th>id</th>
-        <th>caller</th>
-        <th>endpoint</th>
-        <th>message</th>
-    </table>
+    <p id='log'>Empty</p>
 </html>
