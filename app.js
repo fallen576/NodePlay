@@ -14,11 +14,6 @@ io.on('connection', socket => {
     socket.emit('chat-message', 'hello world!');
     logger.log('connected');
 })
-/*
-app.listen(3000, () => {
-    logger.log('listening at 3000');
-});
-*/
 
 /*GET EJS WORKING */
 //app.use(express.static('public'));
@@ -30,7 +25,22 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 //redirect to index.ejs 
 app.get('/', (req, res) => {
-    res.render('admin');
+    database.getLogs(res, (cb) => {
+      var logObjectArr = [];
+      for (var i in cb) {
+        var tmp = cb[i];
+        logger.log(tmp.id + " " + tmp.message + " " + tmp.caller_ip + " " + tmp.endpoint);
+        var logObject = {
+            "id" : tmp.id,
+            "message" : tmp.message,
+            "caller_ip" : tmp.caller_ip,
+            "endpoint" : tmp.endpoint
+        };
+        logObjectArr.push(logObject);
+      }
+      res.render('admin', {"logList":logObjectArr});
+    });
+    
 });
 
 
@@ -50,5 +60,6 @@ app.get('/api/v1/joke_of_the_day/:category', (req, res) => {
         var obj = {'ip':ip,'endpoint':endpoint,'body':body};
 
         io.emit("message-logged", obj);
+        logger.log('emitting');
     });
 });

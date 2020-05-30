@@ -65,7 +65,19 @@ let insertLog = (caller_ip, endpoint, message) => {
     });
 };
 
+let records = (res, cb) => {
+    pool.query("SELECT * FROM logs", (err, rs) => {
+        if (err) {
+            logger.log(err);
+            cb(err);
+        }
+        else {
+            cb(rs);
+        }
+    });
+};
 module.exports.insert = insert;
 module.exports.insertLog = insertLog;
 module.exports.query = query;
 module.exports.update = updatePassword;
+module.exports.getLogs = records;

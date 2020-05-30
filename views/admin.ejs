@@ -1,18 +1,41 @@
-<script src="http://localhost:3000/socket.io/socket.io.js"></script>
-<script>
-    const socket = io('http://localhost:3000');
-
-    socket.on('chat-message', data => {
-        console.log(data);
-    })
-
-    socket.on('message-logged', ans => {
-        console.log('okay ' + JSON.stringify(ans));
-        document.getElementById('log').innerText = JSON.stringify(ans);
-
-    })
-</script>
-<h1>we in dis</h1>
 <html>
-    <p id='log'>Empty</p>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const socket = io('http://localhost:3000');
+
+        socket.on('chat-message', data => {
+            console.log(data);
+        })
+
+        socket.on('message-logged', ans => {
+            console.log('okay ' + JSON.stringify(ans));
+            //document.getElementById('log').innerText = JSON.stringify(ans);
+            $('#log-entries tr:last').after('<tr><td>TBD</td><td>' + ans.ip + '</td><td>' + ans.endpoint + '</td><td>' + ans.body + '</td></tr>');
+
+        })
+    </script>
+    <title>Admin Page</title>
+    <h1 class="jumbotron">Log Entries</h1>
+
+    <table id="log-entries" class="table">
+        <tr>
+            <th>id</th>
+            <th>caller_ip</th>
+            <th>endpoint</th>
+            <th>message</th>
+        </tr>
+        <% for (var i in logList) { %>
+            <tr>
+                <td><%=logList[i].id%></td>
+                <th><%=logList[i].caller_ip%></th>
+                <th><%=logList[i].endpoint%></th>
+                <th><%=logList[i].message%></th>
+            </tr>
+            
+        <%}%>
+    </table>
 </html>
