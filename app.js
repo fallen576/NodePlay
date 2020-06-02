@@ -25,24 +25,26 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 //redirect to index.ejs 
 app.get('/', (req, res) => {
-    database.getLogs(res, (cb) => {
-      var logObjectArr = [];
-      for (var i in cb) {
-        var tmp = cb[i];
-        logger.log(tmp.id + " " + tmp.message + " " + tmp.caller_ip + " " + tmp.endpoint);
-        var logObject = {
-            "id" : tmp.id,
-            "message" : tmp.message,
-            "caller_ip" : tmp.caller_ip,
-            "endpoint" : tmp.endpoint
-        };
-        logObjectArr.push(logObject);
-      }
-      res.render('admin', {"logList":logObjectArr});
-    });
-    
+    res.render('index');
 });
 
+app.get('/admin', (req, res) => {
+    database.getLogs(res, (cb) => {
+        var logObjectArr = [];
+        for (var i in cb) {
+            var tmp = cb[i];
+            //logger.log(tmp.id + " " + tmp.message + " " + tmp.caller_ip + " " + tmp.endpoint);
+            var logObject = {
+                "id" : tmp.id,
+                "message" : tmp.message,
+                "caller_ip" : tmp.caller_ip,
+                "endpoint" : tmp.endpoint
+            };
+            logObjectArr.push(logObject);
+        }
+        res.render('admin', {"logList":logObjectArr});
+    });
+});
 
 //joke of the day endpoint
 app.get('/api/v1/joke_of_the_day/:category', (req, res) => {
@@ -63,3 +65,7 @@ app.get('/api/v1/joke_of_the_day/:category', (req, res) => {
         logger.log('emitting');
     });
 });
+
+//app.get('/api/v1/brews/')
+
+//https://api.openbrewerydb.org/breweries?by_state=maryland

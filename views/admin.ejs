@@ -1,41 +1,51 @@
 <html>
-    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
+    <!-- jQuery library  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        const socket = io('http://localhost:3000');
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+  
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+\
+    
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    
 
-        socket.on('chat-message', data => {
-            console.log(data);
-        })
+    <script>
+        $(document).ready( function () {
+            $('#log-entries').DataTable();
+        });
+        const socket = io('http://localhost:3000');
 
         socket.on('message-logged', ans => {
             console.log('okay ' + JSON.stringify(ans));
             //document.getElementById('log').innerText = JSON.stringify(ans);
             $('#log-entries tr:last').after('<tr><td>TBD</td><td>' + ans.ip + '</td><td>' + ans.endpoint + '</td><td>' + ans.body + '</td></tr>');
+        });
 
-        })
     </script>
     <title>Admin Page</title>
     <h1 class="jumbotron">Log Entries</h1>
 
     <table id="log-entries" class="table">
-        <tr>
-            <th>id</th>
-            <th>caller_ip</th>
-            <th>endpoint</th>
-            <th>message</th>
-        </tr>
-        <% for (var i in logList) { %>
+        <thead>
             <tr>
-                <td><%=logList[i].id%></td>
-                <th><%=logList[i].caller_ip%></th>
-                <th><%=logList[i].endpoint%></th>
-                <th><%=logList[i].message%></th>
+                <th>id</th>
+                <th>caller_ip</th>
+                <th>endpoint</th>
+                <th>message</th>
             </tr>
-            
-        <%}%>
+        </thead>
+        <tbody>
+            <% for (var i in logList) { %>
+                <tr>
+                    <td><%=logList[i].id%></td>
+                    <th><%=logList[i].caller_ip%></th>
+                    <th><%=logList[i].endpoint%></th>
+                    <th><%=logList[i].message%></th>
+                </tr>
+                
+            <%}%>
+    </tbody>
     </table>
 </html>
