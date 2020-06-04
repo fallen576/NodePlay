@@ -1,12 +1,10 @@
 <html>
-    <!-- jQuery library  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
   
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-\
     
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     
@@ -25,27 +23,40 @@
 
     </script>
     <title>Admin Page</title>
-    <h1 class="jumbotron">Log Entries</h1>
-
-    <table id="log-entries" class="table">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>caller_ip</th>
-                <th>endpoint</th>
-                <th>message</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for (var i in logList) { %>
+    <body>
+        
+        <div class="jumbotron container-fluid">
+            <div clas="row">
+            <div class="col">
+            <h1 style="text-align: center;">Log Entries</h1>
+            <p class="lead" style="text-align: center;">
+                <a class="btn btn-primary btn-lg" href="/" role="button">Home page</a>
+            </p>
+            </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+        <table id="log-entries" class="table">
+            <thead>
                 <tr>
-                    <td><%=logList[i].id%></td>
-                    <th><%=logList[i].caller_ip%></th>
-                    <th><%=logList[i].endpoint%></th>
-                    <th><%=logList[i].message%></th>
+                    <th>id</th>
+                    <th>caller_ip</th>
+                    <th>endpoint</th>
+                    <th>message</th>
                 </tr>
-                
-            <%}%>
-    </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <% for (var i in logList) { %>
+                    <tr>
+                        <td><%=logList[i].id%></td>
+                        <th><%=logList[i].caller_ip%></th>
+                        <th><%=logList[i].endpoint%></th>
+                        <th><%=logList[i].message%></th>
+                    </tr>
+                    
+                <%}%>
+        </tbody>
+        </table>
+    </div>
+    </body>
 </html>

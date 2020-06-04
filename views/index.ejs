@@ -1,11 +1,82 @@
 <script defer src="/socket.io/socket.io.js"></script>
-<script src="script.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    getData = function(endpoint, call) {
+      return $.ajax({
+          type: "GET",
+          url: endpoint,
+          dataType: "json",
+          contentType: "application/json;charset=utf-8"
+        });
+    }
+    makeGet = function(endpoint, call) {
+      (call === 'joke') ? $('#jb').attr('hidden', true) : $('#bb').attr('hidden', true);
+      getData(endpoint, call)
+        .done((data) => {
+          handleTable(data, call);
+        })
+        .fail((sender, message, details) => {
+          
+        });
+    }
+    handleTable = (data, call) => {
+      if (call === "joke") {
+        $('#joke_message').html(data);
+        $('#jod_table').attr('hidden',false);
+        $('#jb').attr('hidden', false);
+        $('#jb').html("Again?");
+      }
+      else {
+        $('#brew_message').html(data);
+        $('#brew_table').attr('hidden',false);
+        $('#bb').attr('hidden', false);
+        $('#bb').html("Again?");
+      }
+      
+    };
+</script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <html>
-    <title>Login</title>
+    <title>Tools Page</title>
         <body>
-            <form action="/admin" method="GET">
-                <input type="submit" value="Admin Page">
-            </form>             
+          <div class="container-fluid">
+            <div class="row">
+            <div class="jumbotron col" style="text-align: center;">
+                <h1 class="display-4">Welcome to my Node.js page</h1>
+                <p class="lead">Basically I created a REST API that calls other people's endpoints. Once called we store the caller's IP address, endpoint they decided to call and response in a MySQL database.</p>
+                <hr class="my-4">
+                <p>To get started click any of the buttons below. My favorite part is the Admin page. If someone hits one of my REST endpoints the message gets logged and updates the admin page in real time via sockets and events.</p>
+                <p class="lead">
+                  <a class="btn btn-primary btn-lg" href="/admin" role="button">Admin page</a>
+                </p>
+              </div>  
+            </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    <h5>Joke of the Day</h5>
+                    <button id="jb" class="btn btn-primary" onclick="makeGet('http://localhost:3000/api/v1/joke_of_the_day/blonde', 'joke')">Try Me!</button>
+                    
+                    <table id="jod_table" hidden>
+                      <th>Contents</th>
+                      <tr class="row">
+                        <td id="joke_message" style="word-break:break-word;"></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="col">
+                    <h5>Breweries</h5>
+                    <button id='bb' class="btn btn-primary" onclick="makeGet('http://localhost:3000/api/v1/brews/maryland', 'brew')">Try Me!</button>
+                    <table id="brew_table" hidden>
+                      <th>Contents</th>
+                      <tr class="row">
+                        <td id="brew_message" style="word-break:break-word;"></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
         </body>
 </html>

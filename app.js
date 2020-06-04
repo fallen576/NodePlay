@@ -11,8 +11,8 @@ var io = require('socket.io').listen(server);
 
 
 io.on('connection', socket => {
-    socket.emit('chat-message', 'hello world!');
-    logger.log('connected');
+    //socket.emit('chat-message', 'hello world!');
+    //logger.log('connected');
 })
 
 /*GET EJS WORKING */
@@ -64,6 +64,28 @@ app.get('/api/v1/joke_of_the_day/:category', (req, res) => {
         io.emit("message-logged", obj);
         logger.log('emitting');
     });
+});
+
+//brews
+app.get('/api/v1/brews/:state', (req,res) => {
+    const forwarded = req.headers['x-forwarded-for'];
+    const ip = forwarded ? forwarded.split(/, /)[0] : req.connection.remoteAddress;
+    const state = req.params.state;
+    var endpoint = 'https://api.openbrewerydb.org/breweries?by_state='+state;
+    logger.log(endpoint);
+    
+    request(endpoint, ip, (err, response, body) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200);
+        res.end(JSON.stringify(body));
+
+        var ans = body.replace(/\'/g, "\'\'");
+        logger.insert(ip, endpoint, JSON.stringify(body));
+        var obj = {'ip':ip,'endpoint':endpoint,'body':body};
+
+        io.emit("message-logged", obj);
+    });
+
 });
 
 //app.get('/api/v1/brews/')
