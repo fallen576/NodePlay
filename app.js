@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 //redirect to index.ejs 
 app.get('/', (req, res) => {
-    res.render('index.ejs');
+    res.render('index.ejs'); 
 });
 
 app.get('/admin', (req, res) => {

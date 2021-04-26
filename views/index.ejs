@@ -29,7 +29,7 @@ getData = function(endpoint, call) {
     if (call === "joke") {
       var text = "";
       try {
-        text = data.contents.jokes[0].joke.text == undefined;
+        text = data.contents.jokes[0].joke.text;
       } catch (e) {
         text = "Sorry, we reached our daily limit :))";
       }
