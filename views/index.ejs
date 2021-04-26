@@ -1,7 +1,6 @@
 <script defer src="/socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-<<<<<<< HEAD
 getData = function(endpoint, call) {
     return $.ajax({
         type: "GET",
@@ -33,7 +32,6 @@ getData = function(endpoint, call) {
       $('#jod_table').attr('hidden',false);
       $('#jb').attr('hidden', false);
       $('#jb').html("Again?");
-=======
     getData = function(endpoint, call) {
       return $.ajax({
           type: "GET",
@@ -41,7 +39,6 @@ getData = function(endpoint, call) {
           dataType: "json",
           contentType: "application/json;charset=utf-8"
         });
->>>>>>> parent of 5b49914 (more ui changes.. one day it will look nice)
     }
     makeGet = function(endpoint, call) {
       (call === 'joke') ? $('#jb').attr('hidden', true) : $('#bb').attr('hidden', true);
