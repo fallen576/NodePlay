@@ -1,3 +1,5 @@
+secrets.properties
+
 # Logs
 logs
 *.log

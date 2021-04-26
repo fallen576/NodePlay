@@ -1,11 +1,13 @@
 const mysql = require('mysql');
 const logger = require('../logger');
+const props = require('properties-reader')
+const prop = props('secrets.properties')
 
 let pool = mysql.createPool({
     host: 'localhost',
     port: '3306',
     user : "node_user",
-    password : "SchoolPassword1!",/*DUMB SCHOOL PASSWORD GOES HERE*/
+    password : prop.get("password"),/*DUMB SCHOOL PASSWORD GOES HERE*/
     database : 'node'
 });
 

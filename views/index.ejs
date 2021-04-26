@@ -1,5 +1,10 @@
+<html>
+  <head>
 <script defer src="/socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <script>
 getData = function(endpoint, call) {
     return $.ajax({
@@ -32,43 +37,25 @@ getData = function(endpoint, call) {
       $('#jod_table').attr('hidden',false);
       $('#jb').attr('hidden', false);
       $('#jb').html("Again?");
-    getData = function(endpoint, call) {
-      return $.ajax({
-          type: "GET",
-          url: endpoint,
-          dataType: "json",
-          contentType: "application/json;charset=utf-8"
-        });
     }
-    makeGet = function(endpoint, call) {
-      (call === 'joke') ? $('#jb').attr('hidden', true) : $('#bb').attr('hidden', true);
-      getData(endpoint, call)
-        .done((data) => {
-          handleTable(data, call);
-        })
-        .fail((sender, message, details) => {
-          
-        });
+    else {
+      for (var i = 0; i <= 3; i++) {
+        $('#name'+i).html(data[i].name);
+        $('#type'+i).html(data[i].brewery_type); 
+        $('#address'+i).html(data[i].street); 
+      }
+      $('#brew_message').html(data);
+      $('#brew_table').attr('hidden',false);
+      $('#bb').attr('hidden', false);
+      $('#bb').html("Again?");
     }
-    handleTable = (data, call) => {
-      if (call === "joke") {
-        $('#joke_message').html(data);
-        $('#jod_table').attr('hidden',false);
-        $('#jb').attr('hidden', false);
-        $('#jb').html("Again?");
-      }
-      else {
-        $('#brew_message').html(data);
-        $('#brew_table').attr('hidden',false);
-        $('#bb').attr('hidden', false);
-        $('#bb').html("Again?");
-      }
-      
-    };
+    
+  };
 </script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<html>
+</head>
+
+
     <title>Tools Page</title>
         <body>
           <div class="container-fluid">
@@ -79,7 +66,7 @@ getData = function(endpoint, call) {
                 <hr class="my-4">
                 <p>To get started click any of the buttons below. My favorite part is the Admin page. If someone hits one of my REST endpoints the message gets logged and updates the admin page in real time via sockets and events.</p>
                 <p class="lead">
-                  <a class="btn btn-primary btn-lg" href="/admin" role="button">Admin page</a>
+                  <a class="btn btn-primary btn-lg btn-block" href="/admin" role="button">Admin page</a>
                 </p>
               </div>  
             </div>
@@ -91,7 +78,7 @@ getData = function(endpoint, call) {
                     <button id="jb" class="btn btn-primary" onclick="makeGet('http://localhost:3000/api/v1/joke_of_the_day/blonde', 'joke')">Try Me!</button>
                     
                     <table id="jod_table" hidden>
-                      <th>Contents</th>
+                      <th>Joke</th>
                       <tr class="row">
                         <td id="joke_message" style="word-break:break-word;"></td>
                       </tr>
@@ -101,10 +88,28 @@ getData = function(endpoint, call) {
                     <h5>Breweries</h5>
                     <button id='bb' class="btn btn-primary" onclick="makeGet('http://localhost:3000/api/v1/brews/maryland', 'brew')">Try Me!</button>
                     <table id="brew_table" hidden>
-                      <th>Contents</th>
-                      <tr class="row">
-                        <td id="brew_message" style="word-break:break-word;"></td>
+                      <thead>
+                        <th>Name</th>
+                        <th>Brewery Type</th>
+                        <th>Address</th>
+                     </thead>
+                     <tbody>
+                      <tr>
+                        <td id="name1" style="word-break:break-word;"></td>
+                        <td id="type1" style="word-break:break-word;"></td>
+                        <td id="address1" style="word-break:break-word;"></td>
                       </tr>
+                      <tr>
+                        <td id="name2" style="word-break:break-word;"></td>
+                        <td id="type2" style="word-break:break-word;"></td>
+                        <td id="address2" style="word-break:break-word;"></td>
+                      </tr>
+                      <tr>
+                        <td id="name3" style="word-break:break-word;"></td>
+                        <td id="type3" style="word-break:break-word;"></td>
+                        <td id="address3" style="word-break:break-word;"></td>
+                      </tr>
+                    </tbody>
                     </table>
                   </div>
                 </div>

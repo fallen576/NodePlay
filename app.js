@@ -9,7 +9,6 @@ var app = express();
 var server = app.listen(3000);
 var io = require('socket.io').listen(server);
 
-
 io.on('connection', socket => {
     //socket.emit('chat-message', 'hello world!');
     //logger.log('connected');
@@ -25,11 +24,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 //redirect to index.ejs 
 app.get('/', (req, res) => {
-<<<<<<< HEAD
-    res.render('index.ejs'); 
-=======
-    res.render('index');
->>>>>>> parent of 5b49914 (more ui changes.. one day it will look nice)
+    res.render('index.ejs');
 });
 
 app.get('/admin', (req, res) => {
